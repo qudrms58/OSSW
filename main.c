@@ -19,10 +19,7 @@ void user(); //유저가 돌 놓기
 void bot(); //봇이 돌 놓기
 int iswin(int b[7][7]); //승리자 보여주기
 
-int maxnum(int n, int b);
-int minnum(int n, int b);
-int minimax(int player, int depth, int h[][3]);
-int easymode(int f);
+void easymode(int f);
 void hardmode(int fir);
 
 int main()
@@ -44,48 +41,11 @@ int main()
 	printf("\n");
 
 	hardmode(fir);
-	//if (OptForMode == 1)
+
+	//if (OptForMode == 1)      //easy모드가 완성되면 그 때 병합 해서 옵션으로 설정
 //		easymode(fir);
 //	else if (OptForMode == 2)
 //		hardmode(fir);
-
-	printf("Press 1:for user input\nPress 0:for bot input\n");
-	scanf("%d", &t);
-
-	while (1)
-	{
-		if (t == 1)
-		{
-			user();
-			i++;
-			display();
-			if (iswin(a) == 10)
-			{
-				printf("User wins\n");
-				exit(0);
-			}
-			t--;
-
-		}
-		if (t == 0)
-		{
-			bot();
-			i++;
-			display();
-			if (iswin(a) == -10)
-			{
-				printf("Bot wins\n");
-				exit(0);
-			}
-			t++;
-		}
-		if (i == 49)
-		{
-			printf("The game has resulted in a draw");
-			exit(0);
-		}
-
-	}
 }
 
 void init()
@@ -98,6 +58,7 @@ void init()
 		}
 	}
 }
+
 void display()
 {
 	int i, j;
@@ -113,6 +74,7 @@ void display()
 	}
 	printf("\n");
 }
+
 void user()
 {
 	int location, x, y;
@@ -134,6 +96,7 @@ void user()
 	a[x][y] = 0;
 
 }
+
 void bot()
 {
 	int bot, x, y;
@@ -150,6 +113,7 @@ void bot()
 		}
 	}
 }
+
 int iswin(int b[7][7])
 {
 	int hor, col;
@@ -184,114 +148,9 @@ int iswin(int b[7][7])
 		}
 	}
 
-	/*
-	if (b[0][0] == b[1][1] && b[1][1] == b[2][2])
-	{
-	if (b[0][0] == player)
-	return +10;
-	else if (b[0][0] == opponent)
-	return -10;
-	}
-
-	if (b[0][2] == b[1][1] && b[1][1] == b[2][0])
-	{
-	if (b[0][2] == player)
-	return +10;
-	else if (b[0][2] == opponent)
-	return -10;
-	}*/
-
 	// Else if none of them have won then return 0
 	return 0;
 }
-
-int maxnum(int n, int b)
-{
-	if (n>b)
-		return n;
-	else
-		return b;
-}
-
-int minnum(int n, int b)
-{
-	if (n<b)
-	{
-		return n;
-	}
-	else
-		return b;
-}
-/*
-int easymode(int f) {
-	int temp, bot, i = 0;;
-
-	srand(time(NULL));
-
-	while (1) {
-		if (f == 1) {
-			printf("Enter location:");
-			scanf("%d", &temp);
-
-			if (a[temp - 1] == 0 || a[temp - 1] == -1) {
-				printf("Other location\n");
-				continue;
-			}
-
-			i++;
-			//a[temp - 1] = 0;
-
-			if (checkmode(0) == 10) {
-				printf("\t\t  %d |  %d  | %d  \n", a[0][0], a[0][1], a[0][2]);
-				printf("\t\t---------------\n");
-				printf("\t\t  %d |  %d  | %d  \n", a[1][3], a[1][4], a[1][5]);
-				printf("\t\t---------------\n");
-				printf("\t\t  %d |  %d  | %d  \n", a[2][6], a[2][7], a[2][8]);
-				printf("\n\tYou Win\n");
-				break;
-			}
-
-			if (i == 9) {
-				printf("\t\t  %d |  %d  | %d  \n", a[0][0], a[0][1], a[0][2]);
-				printf("\t\t---------------\n");
-				printf("\t\t  %d |  %d  | %d  \n", a[1][3], a[1][4], a[1][5]);
-				printf("\t\t---------------\n");
-				printf("\t\t  %d |  %d  | %d  \n", a[2][6], a[2][7], a[2][8]);
-				printf("\n\tThe Game Is DRAW\n");
-				break;
-			}
-
-			while (1) {
-				bot = rand() % 10;
-				if (bot != 0 && a[bot - 1] != 0 && a[bot - 1] != -1) {
-					i++;
-					break;
-				}
-			}
-
-			//	a[bot - 1] = -1;
-
-			if (checkmode(-1) == 10) {
-				printf("\t\t  %d |  %d  | %d  \n", a[0][0], a[0][1], a[0][2]);
-				printf("\t\t---------------\n");
-				printf("\t\t  %d |  %d  | %d  \n", a[1][3], a[1][4], a[1][5]);
-				printf("\t\t---------------\n");
-				printf("\t\t  %d |  %d  | %d  \n", a[2][6], a[2][7], a[2][8]);
-				printf("\n\tYou Lose\n");
-				break;
-			}
-
-			printf("\t\t  %d |  %d  | %d  \n", a[0][0], a[0][1], a[0][2]);
-			printf("\t\t---------------\n");
-			printf("\t\t  %d |  %d  | %d  \n", a[1][3], a[1][4], a[1][5]);
-			printf("\t\t---------------\n");
-			printf("\t\t  %d |  %d  | %d  \n", a[2][6], a[2][7], a[2][8]);
-		}
-	}
-
-	return 0;
-}
-*/
 
 void hardmode(int fir)
 {
