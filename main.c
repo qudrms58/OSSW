@@ -8,7 +8,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int a[7][7];			//a[3][3] => a[7][7]
+int a[7][7] = { 0 };			//a[3][3] => a[7][7]
 int player=1,opponent=0;
 
 int maxnum(int n,int b)
@@ -206,9 +206,11 @@ void user()
     a[x][y]=1;
 }
 
+int easymode(int f);
+
 int main()
 {
-    int OptForMode;
+    int OptForMode, fir;
 	int t;
 	
 	init();
@@ -220,10 +222,14 @@ int main()
 	scanf("%d", &OptForMode);
 	printf("\n");
 
+	printf("Press 1:for user input\nPress 0:for bot input : ");
+	scanf("%d", &fir);
+	printf("\n");
+
 	if (OptForMode == 1)
-		easymode();
+		easymode(fir);
 	else if (OptForMode == 2)
-		hardmode();
+		hardmode(fir);
 
     printf("Press 1:for user input\nPress 0:for bot input\n");
    // scanf("%d",&t);
@@ -273,4 +279,75 @@ void init()
 		}
 	}
 	return;
+}
+
+
+
+int easymode(int f) {
+	int temp, bot, i = 0;;
+
+	srand(time(NULL));
+	
+	while (1) {
+		if (f == 1) {
+			printf("Enter location:");
+			scanf("%d", &temp);
+
+			if (a[temp - 1] == 0 || a[temp - 1] == -1) {
+				printf("Other location\n");
+				continue;
+			}
+			
+			i++;
+			//a[temp - 1] = 0;
+
+			if (checkmode(0) == 10) {
+				printf("\t\t  %d |  %d  | %d  \n", a[0], a[1], a[2]);
+				printf("\t\t---------------\n");
+				printf("\t\t  %d |  %d  | %d  \n", a[3], a[4], a[5]);
+				printf("\t\t---------------\n");
+				printf("\t\t  %d |  %d  | %d  \n", a[6], a[7], a[8]);
+				printf("\n\tYou Win\n");
+				break;
+			}
+
+			if (i == 9) {
+				printf("\t\t  %d |  %d  | %d  \n", a[0], a[1], a[2]);
+				printf("\t\t---------------\n");
+				printf("\t\t  %d |  %d  | %d  \n", a[3], a[4], a[5]);
+				printf("\t\t---------------\n");
+				printf("\t\t  %d |  %d  | %d  \n", a[6], a[7], a[8]);
+				printf("\n\tThe Game Is DRAW\n");
+				break;
+			}
+
+			while (1) {
+				bot = rand() % 10;
+				if (bot != 0 && a[bot - 1] != 0 && a[bot - 1] != -1) {
+					i++;
+					break;
+				}
+			}
+
+		//	a[bot - 1] = -1;
+			
+			if (checkmode(-1) == 10) {
+				printf("\t\t  %d |  %d  | %d  \n", a[0], a[1], a[2]);
+				printf("\t\t---------------\n");
+				printf("\t\t  %d |  %d  | %d  \n", a[3], a[4], a[5]);
+				printf("\t\t---------------\n");
+				printf("\t\t  %d |  %d  | %d  \n", a[6], a[7], a[8]);
+				printf("\n\tYou Lose\n");
+				break;
+			}
+
+			printf("\t\t  %d |  %d  | %d  \n", a[0], a[1], a[2]);
+			printf("\t\t---------------\n");
+			printf("\t\t  %d |  %d  | %d  \n", a[3], a[4], a[5]);
+			printf("\t\t---------------\n");
+			printf("\t\t  %d |  %d  | %d  \n", a[6], a[7], a[8]);
+		}
+	}
+
+	return 0;
 }
