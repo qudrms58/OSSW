@@ -3,6 +3,9 @@
 //
 //  Created by 김태균 on 2017. 11. 29..
 //  Copyright © 2017년 김태균. All rights reserved.
+
+//룰은 3목은 너무 쉽고 5목은 코드 짜기 힘들어 4목으로 한다.
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
@@ -25,7 +28,7 @@ int easymode(int f);
 int main()
 {
 	int OptForMode, fir;
-	int t;
+	int t, i;
 
 	init();
 	display();
@@ -53,6 +56,7 @@ int main()
 		if (t == 1)
 		{
 			user();
+			i++;
 			display();
 			if (iswin(a) == 10)
 			{
@@ -65,6 +69,7 @@ int main()
 		if (t == 0)
 		{
 			bot();
+			i++;
 			display();
 			if (iswin(a) == -10)
 			{
@@ -73,7 +78,7 @@ int main()
 			}
 			t++;
 		}
-		if (isempty(a) == 0)
+		if (i == 49)
 		{
 			printf("The game has resulted in a draw");
 			exit(0);
@@ -195,35 +200,39 @@ int isempty(int g[][7])
 
 int iswin(int b[7][7])
 {
-	int row;
-	int col;
-	for (row = 0; row<3; row++)
-	{
-		if (b[row][0] == b[row][1] &&
-			b[row][1] == b[row][2])
-		{
-			if (b[row][0] == player)
-				return +10;
-			else if (b[row][0] == opponent)
-				return -10;
+	int hor, col;
+
+	// Checking for horizontal
+	for (col = 0; col < 7; col++) {
+		for (hor = 0; hor < 4; hor++) {
+			if (b[col][hor] == b[col][hor + 1] && b[col][hor + 1] == b[col][hor + 2] 
+				&& b[col][hor + 2] == b[col][hor + 3]) {
+					return 10;
+			}
 		}
 	}
 
-	// Checking for Columns for X or O victory.
-	for (col = 0; col<3; col++)
-	{
-		if (b[0][col] == b[1][col] &&
-			b[1][col] == b[2][col])
-		{
-			if (b[0][col] == player)
-				return +10;
-
-			else if (b[0][col] == opponent)
-				return -10;
+	// Checking for Columns
+	for (hor = 0; hor < 7; hor++) {
+		for (col = 0; col < 4; col++) {
+			if (b[col][hor] == b[col + 1][hor] && b[col + 1][hor] == b[col + 2][hor]
+				&& b[col + 2][hor] == b[col + 3][hor]) {
+				return 10;
+			}
 		}
 	}
 
 	// Checking for Diagonals for X or O victory.
+	for (hor = 0; hor < 4; hor++) {
+		for (col = 0; col < 4; col++) {
+			if (b[col][hor] == b[col + 1][hor + 1] && b[col + 1][hor + 1] == b[col + 2][hor + 2]
+				&& b[col + 2][hor + 2] == b[col + 3][hor + 3]) {
+				return 10;
+			}
+		}
+	}
+	
+	/*
 	if (b[0][0] == b[1][1] && b[1][1] == b[2][2])
 	{
 		if (b[0][0] == player)
@@ -238,7 +247,7 @@ int iswin(int b[7][7])
 			return +10;
 		else if (b[0][2] == opponent)
 			return -10;
-	}
+	}*/
 
 	// Else if none of them have won then return 0
 	return 0;
