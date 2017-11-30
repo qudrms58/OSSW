@@ -223,62 +223,6 @@ int minnum(int n, int b)
 		return b;
 }
 /*
-int minimax(int player, int depth, int h[][3])
-{
-
-	int best, i, j, k, l;
-	if (iswin(h) == 10)
-	{
-		return 10;
-	}
-	if (iswin(h) == -10)
-	{
-		return -10;
-	}
-	if (isempty(h) == 0)
-	{
-		return 0;
-	}
-	if (player == 0)
-	{
-		best = 99;
-		for (i = 0; i<3; i++)
-		{
-			for (j = 0; j<3; j++)
-			{
-				if (h[i][j] == -1)
-				{
-					h[i][j] = 0;
-					best = min(best, minimax(1, depth + 1, h));
-
-					h[i][j] = -1;
-				}
-			}
-		}
-		return best;
-	}
-	if (player == 1)
-	{
-		best = -99;
-		for (k = 0; k<3; k++)
-		{
-			for (l = 0; l<3; l++)
-			{
-				if (h[k][l] == -1)
-				{
-					h[k][l] = 1;
-					best = max(best, minimax(0, depth + 1, h));
-					h[k][l] = -1;
-				}
-			}
-		}
-		return best;
-	}
-	else
-		return 0;
-}
-*/
-/*
 int easymode(int f) {
 	int temp, bot, i = 0;;
 
