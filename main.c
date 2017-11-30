@@ -162,42 +162,6 @@ void bot()
 	}
 	a[movex][movey] = 0;
 }
-
-int maxnum(int n, int b)
-{
-	if (n>b)
-		return n;
-	else
-		return b;
-}
-
-int minnum(int n, int b)
-{
-	if (n<b)
-	{
-		return n;
-	}
-	else
-		return b;
-}
-
-int isempty(int g[][7])
-{
-	int m, l;
-	for (m = 0; m < 3; m++)
-	{
-		for (l = 0; l < 3; l++)
-		{
-			if (g[m][l] == -1)
-			{
-				return 1;
-			}
-
-		}
-	}
-	return 0;
-}
-
 int iswin(int b[7][7])
 {
 	int hor, col;
@@ -205,9 +169,9 @@ int iswin(int b[7][7])
 	// Checking for horizontal
 	for (col = 0; col < 7; col++) {
 		for (hor = 0; hor < 4; hor++) {
-			if (b[col][hor] == b[col][hor + 1] && b[col][hor + 1] == b[col][hor + 2] 
+			if (b[col][hor] == b[col][hor + 1] && b[col][hor + 1] == b[col][hor + 2]
 				&& b[col][hor + 2] == b[col][hor + 3]) {
-					return 10;
+				return 10;
 			}
 		}
 	}
@@ -231,28 +195,45 @@ int iswin(int b[7][7])
 			}
 		}
 	}
-	
+
 	/*
 	if (b[0][0] == b[1][1] && b[1][1] == b[2][2])
 	{
-		if (b[0][0] == player)
-			return +10;
-		else if (b[0][0] == opponent)
-			return -10;
+	if (b[0][0] == player)
+	return +10;
+	else if (b[0][0] == opponent)
+	return -10;
 	}
 
 	if (b[0][2] == b[1][1] && b[1][1] == b[2][0])
 	{
-		if (b[0][2] == player)
-			return +10;
-		else if (b[0][2] == opponent)
-			return -10;
+	if (b[0][2] == player)
+	return +10;
+	else if (b[0][2] == opponent)
+	return -10;
 	}*/
 
 	// Else if none of them have won then return 0
 	return 0;
 }
 
+int maxnum(int n, int b)
+{
+	if (n>b)
+		return n;
+	else
+		return b;
+}
+
+int minnum(int n, int b)
+{
+	if (n<b)
+	{
+		return n;
+	}
+	else
+		return b;
+}
 int minimax(int player, int depth, int h[][3])
 {
 
