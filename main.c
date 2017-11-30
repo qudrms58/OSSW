@@ -8,17 +8,17 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int a[3][3];
+int a[7][7];			//a[3][3] => a[7][7]
 int player=1,opponent=0;
 
-int max(int n,int b)
+int maxnum(int n,int b)
 {
     if(n>b)
         return n;
     else
         return b;
 }
-int min(int n,int b)
+int minnum(int n,int b)
 {
     if(n<b)
     {
@@ -28,18 +28,7 @@ int min(int n,int b)
         return b;
 }
 
-void init()
-{
-    int i,j;
-    for(i=0;i<3;i++)
-    {
-        for(j=0;j<3;j++)
-        {
-            a[i][j]=-1;
-        }
-    }
-    return;
-}
+void init(); //오목판 좌표 초기화
 int isempty(int g[][3])
 {
     int m,l;
@@ -177,6 +166,7 @@ int minimax(int player,int depth,int h[][3])
     else
         return 0;
 }
+
 void bot()
 {
     int bestval=99;
@@ -206,6 +196,7 @@ void bot()
     
     
 }
+
 void user()
 {
     int x,y;
@@ -214,12 +205,28 @@ void user()
     
     a[x][y]=1;
 }
+
 int main()
 {
-    int t; // 막넣어놨음 ㅡㅡ 나쁜넘
-    init();
+    int OptForMode;
+	int t;
+	
+	init();
+
+	//모드 선택
+	printf("Press 0:user vs user\n");
+	printf("Press 1:user vs bot(easy)\n");
+	printf("Press 2:user vs bot(hard) : ");
+	scanf("%d", &OptForMode);
+	printf("\n");
+
+	if (OptForMode == 1)
+		easymode();
+	else if (OptForMode == 2)
+		hardmode();
+
     printf("Press 1:for user input\nPress 0:for bot input\n");
-    scanf("%d",&t);
+   // scanf("%d",&t);
     
     while(1)
     {
@@ -253,4 +260,17 @@ int main()
         }
         
     }
+}
+
+void init()
+{
+	int i, j;
+	for (i = 0; i<7; i++)
+	{
+		for (j = 0; j<7; j++)
+		{
+			a[i][j] = i + j + 1;
+		}
+	}
+	return;
 }
