@@ -13,17 +13,17 @@
 int a[7][7] = { 0 };			//a[3][3] => a[7][7]
 int player = 1, opponent = 0;
 
-void init(); //오목판 좌표 초기화
+void init(); //4목판 좌표 초기화
+void display(); //4목판 좌표 보여주기
+void user(); //유저가 돌 놓기
+void bot(); //봇이 돌 놓기
+int iswin(int b[7][7]); //승리자 보여주기
 
 int maxnum(int n, int b);
 int minnum(int n, int b);
-int isempty(int g[][7]);
-void display();
-int iswin(int b[7][7]);
 int minimax(int player, int depth, int h[][3]);
-void bot();
-void user();
 int easymode(int f);
+void hardmode(int fir);
 
 int main()
 {
@@ -43,6 +43,7 @@ int main()
 	scanf("%d", &fir);
 	printf("\n");
 
+	hardmode(fir);
 	//if (OptForMode == 1)
 //		easymode(fir);
 //	else if (OptForMode == 2)
@@ -135,32 +136,19 @@ void user()
 }
 void bot()
 {
-	int bestval = 99;
-	int movex = -1;
-	int movey = -1;
-	int score;
-	int m, n;
-	int i, bot1;
+	int bot, x, y;
 
-	for (m = 0; m<7; m++)
-	{
-		for (n = 0; n<7; n++)
-		{
-			if (a[m][n] == -1)
-			{
-				a[m][n] = 0;
-				score = minimax(1, 0, a);
-				if (score<bestval)
-				{
-					bestval = score;
-					movex = m;
-					movey = n;
-				}
-				a[m][n] = -1;
-			}
+	srand(time(NULL));
+
+	while (1) {
+		bot = rand() % 10;
+		x = (bot - 1) / 7;
+		y = (bot - 1) % 7;
+		if (bot != 0 && a[x][y] != 0 && a[x][y] != -1) {
+			a[x][y] = -1;
+			break;
 		}
 	}
-	a[movex][movey] = 0;
 }
 int iswin(int b[7][7])
 {
@@ -234,6 +222,7 @@ int minnum(int n, int b)
 	else
 		return b;
 }
+/*
 int minimax(int player, int depth, int h[][3])
 {
 
@@ -288,7 +277,7 @@ int minimax(int player, int depth, int h[][3])
 	else
 		return 0;
 }
-
+*/
 /*
 int easymode(int f) {
 	int temp, bot, i = 0;;
@@ -359,3 +348,47 @@ int easymode(int f) {
 	return 0;
 }
 */
+
+void hardmode(int fir)
+{
+	int temp, i = 0;
+	int x, y;
+
+	srand(time(NULL));
+
+	while (1) {
+		//유저가 먼저 돌을 놓는다.
+		if (fir == 1) {
+			user();
+			i++;
+
+			//유저가 이겼다
+			if (iswin(a) == 10) {
+				display();
+				printf("\n\tYou Win\n");
+				break;
+			}
+
+			//게임이 비겼다
+			if (i == 49) {
+				display();
+				printf("\n\tThe Game Is DRAW\n");
+				break;
+			}
+
+			//봇이 돌을 놓을 곳을 찾는다.
+			bot();
+			i++;
+
+			//봇이 이겼다.
+			if (iswin(a) == 10) {
+				display();
+				printf("\n\tYou Lose\n");
+				break;
+			}
+
+			//누구도 이기지 않아 현재상황만 출력한다.
+			display();
+		}
+	}
+}
